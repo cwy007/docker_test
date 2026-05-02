@@ -16,8 +16,8 @@ RUN npm run build
 # production stage
 FROM node:latest as production-stage
 
-COPY --from=build-stage /app/dist ./dist
-COPY --from=build-stage /app/package.json ./package.json
+COPY --from=build-stage /app/dist /app
+COPY --from=build-stage /app/package.json /app/package.json
 
 WORKDIR /app
 
@@ -27,4 +27,4 @@ RUN npm install --production
 
 EXPOSE 3000
 
-CMD ["node", "./dist/main.js"]
+CMD ["node", "/app/main.js"]
